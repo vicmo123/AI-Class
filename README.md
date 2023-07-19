@@ -8,4 +8,6 @@ Finite State Machine exercise : Simple game where the enemy has tot try to catch
 
 Flocking AI : Demo of the flocking algorithm with boids.
 
+Shortest Path Exercise : Using A* algorithm, the game find the best path between two points chosen by the player.
+
 Smoother Movement Exercice : The dot tries to catch the mouse, but with smoother movement using physics.
