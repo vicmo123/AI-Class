@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerAvoidGhost : PlayerBehaviour
+{
+    public readonly float ghostMinDistance = 10f;
+    public Ghost currentEnemey;
+    public bool ghostIsToClose { get; set; }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Node node = other.GetComponent<Node>();
+
+        if (node != null && enabled && pacman.target == null)
+        {
+            // Pick a random available direction
+            int index = Random.Range(0, node.availableDirections.Count);
+
+            // Prefer not to go back the same direction so increment the index to
+            // the next available direction
+            if (node.availableDirections.Count > 1 && node.availableDirections[index] == -pacman.movement.direction)
+            {
+                index++;
+
+                // Wrap the index back around if overflowed
+                if (index >= node.availableDirections.Count)
+                {
+                    index = 0;
+                }
+            }
+
+            pacman.movement.SetDirection(node.availableDirections[index]);
+        }
+        else if (ghostIsToClose == true && enabled)
+        {
+            if(pacman.movement.direction == currentEnemey.movement.direction)
+                pacman.movement.SetDirection(pacman.movement.direction);
+            else
+                pacman.movement.SetDirection(-pacman.movement.direction);
+        }
+    }
+
+}
